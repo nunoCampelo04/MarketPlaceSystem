@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprar Produto</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Comprar Produto</h1>
+
+        <h2>Produto: {{ produto['nome'] }}</h2>
+        <p>Categoria: {{ produto['categoria'] }}</p>
+        <p>Preço: {{ produto['preco'] }}</p>
+        <p>Stock: {{ produto['stock'] }}</p>
+
+        <form action="/comprar" method="POST">
+            <input type="hidden" name="produtor" value="{{ request.args['produtor'] }}">
+            <input type="hidden" name="nome_produto" value="{{ produto['nome'] }}">
+            <label for="quantidade">Quantidade:</label>
+            <input type="number" id="quantidade" name="quantidade" min="1">
+
+            <button type="submit">Comprar</button>
+        </form>
+
+        <a href="/">Voltar para a página inicial</a>
+    </div>
+</body>
+</html>

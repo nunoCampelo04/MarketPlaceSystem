@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos de {{ produtor.nome }}</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <div class="container produto-container">
+        <h1>Produtos de {{ produtor.nome }}</h1>
+
+        {% if produtos %}
+            <ul class="produto-lista">
+            {% for produto in produtos %}
+                <li class="produto-item">
+                    <div class="produto-info">
+                        <span class="produto-nome">{{ produto['nome'] }}</span>
+                        <span class="produto-categoria">{{ produto['categoria'] }}</span>
+                        <span class="produto-preco">€{{ produto['preco'] }}</span>
+                        <span class="produto-stock">Stock: {{ produto['stock'] }}</span>
+                    </div>
+                    <form action="{{ url_for('realizar_compra') }}" method="POST" class="compra-form">
+                        <input type="hidden" name="produtor" value="{{ request.form['produtor'] }}">
+                        <input type="hidden" name="nome_produto" value="{{ produto['nome'] }}">
+                        <input type="number" name="quantidade" min="1" max="{{ produto['stock'] }}" required class="quantidade-input" placeholder="Qtd">
+                        <button type="submit" class="comprar-btn">Comprar</button>
+                    </form>
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p class="sem-produtos">Nenhum produto encontrado.</p>
+        {% endif %}
+
+        <a href="/" class="voltar-link">Voltar para a página inicial</a>
+    </div>
+</body>
+</html>
